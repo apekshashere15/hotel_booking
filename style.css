@@ -1,0 +1,72 @@
+/* Light Premium Background */
+body {
+    background: linear-gradient(to right, #f8f9fa, #eef2f3);
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Center spacing */
+.container {
+    margin-top: 80px;
+}
+
+/* Premium Card */
+.form-container {
+    background: #ffffff;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+    border-top: 4px solid #c8a45d;
+}
+
+/* Title */
+.luxury-title {
+    color: #222;
+    font-weight: 600;
+}
+
+/* Labels */
+.form-label {
+    color: #444;
+    font-weight: 500;
+}
+
+/* Inputs */
+.form-control, .form-select {
+    border-radius: 8px;
+    border: 1px solid #ddd;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: #c8a45d;
+    box-shadow: 0 0 0 0.2rem rgba(200, 164, 93, 0.2);
+}
+
+/* Guest Box */
+.guest-box {
+    background: #f8f9fa;
+    border-radius: 10px;
+    border: 1px solid #e0e0e0;
+}
+
+/* Gold Button */
+.btn-gold {
+    background: linear-gradient(to right, #c8a45d, #b8924f);
+    color: white;
+    border: none;
+    border-radius: 30px;
+    padding: 10px 25px;
+    transition: 0.3s;
+}
+
+.btn-gold:hover {
+    background: linear-gradient(to right, #b8924f, #a67c35);
+    transform: translateY(-2px);
+}
+
+/* Price Section */
+.price-breakdown {
+    background: #fafafa;
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid #eee;
+}

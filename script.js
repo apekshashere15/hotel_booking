@@ -3,60 +3,51 @@ $(document).ready(function () {
     // ========================
     // ROOM PRICES
     // ========================
-    let prices = {
+    const prices = {
         "Single": 3000,
         "Double": 5000,
         "Suite": 8000
     };
 
-    let guestCount = 1;
+    let adults = 1;
+    let children = 0;
 
     // ========================
-// ADULTS & CHILDREN COUNTER
-// ========================
-
-let adults = 1;
-let children = 0;
-
-$("#adultPlus").click(function () {
-    if (adults < 5) {
-        adults++;
+    // COUNTER LOGIC
+    // ========================
+    function updateCounters() {
         $("#adultCount").text(adults);
-    }
-});
-
-$("#adultMinus").click(function () {
-    if (adults > 1) {
-        adults--;
-        $("#adultCount").text(adults);
-    }
-});
-
-$("#childPlus").click(function () {
-    if (children < 5) {
-        children++;
         $("#childCount").text(children);
+        calculatePrice(); // Recalculate if guest counts affect logic later
     }
-});
 
-$("#childMinus").click(function () {
-    if (children > 0) {
-        children--;
-        $("#childCount").text(children);
-    }
-});
+    $("#adultPlus").click(function () {
+        if (adults < 5) { adults++; updateCounters(); }
+    });
+
+    $("#adultMinus").click(function () {
+        if (adults > 1) { adults--; updateCounters(); }
+    });
+
+    $("#childPlus").click(function () {
+        if (children < 5) { children++; updateCounters(); }
+    });
+
+    $("#childMinus").click(function () {
+        if (children > 0) { children--; updateCounters(); }
+    });
 
     // ========================
-    // DATEPICKER INITIALIZATION
+    // DATEPICKER LOGIC
     // ========================
     $("#checkin").datepicker({
         minDate: 0,
         dateFormat: "yy-mm-dd",
         onSelect: function (selectedDate) {
-            let checkinDate = $(this).datepicker('getDate');
-            checkinDate.setDate(checkinDate.getDate() + 1);
-
-            $("#checkout").datepicker("option", "minDate", checkinDate);
+            // Set minDate for checkout to be at least 1 day after checkin
+            let nextDay = new Date(selectedDate);
+            nextDay.setDate(nextDay.getDate() + 1);
+            $("#checkout").datepicker("option", "minDate", nextDay);
             calculatePrice();
         }
     });
@@ -71,33 +62,34 @@ $("#childMinus").click(function () {
     // PRICE CALCULATION
     // ========================
     function calculatePrice() {
-
-        let checkinVal = $("#checkin").val();
-        let checkoutVal = $("#checkout").val();
-        let room = $("#roomType").val();
+        const checkinVal = $("#checkin").val();
+        const checkoutVal = $("#checkout").val();
+        const room = $("#roomType").val();
 
         if (!checkinVal || !checkoutVal || !room) {
             resetPrices();
             return;
         }
 
-        let checkin = new Date(checkinVal);
-        let checkout = new Date(checkoutVal);
+        const checkin = new Date(checkinVal);
+        const checkout = new Date(checkoutVal);
 
         if (checkout <= checkin) {
             resetPrices();
             return;
         }
 
-        let nights = (checkout - checkin) / (1000 * 60 * 60 * 24);
+        // Calculate nights
+        const timeDiff = checkout.getTime() - checkin.getTime();
+        const nights = Math.ceil(timeDiff / (1000 * 3600 * 24));
 
-        let roomTotal = nights * prices[room];
-        let gst = roomTotal * 0.18;
-        let grandTotal = roomTotal + gst;
+        const roomTotal = nights * prices[room];
+        const gst = roomTotal * 0.18;
+        const grandTotal = roomTotal + gst;
 
-        $("#roomTotal").text(roomTotal.toFixed(2));
-        $("#gstAmount").text(gst.toFixed(2));
-        $("#grandTotal").text(grandTotal.toFixed(2));
+        $("#roomTotal").text(roomTotal.toLocaleString('en-IN'));
+        $("#gstAmount").text(gst.toLocaleString('en-IN'));
+        $("#grandTotal").text(grandTotal.toLocaleString('en-IN'));
     }
 
     function resetPrices() {
@@ -112,38 +104,37 @@ $("#childMinus").click(function () {
     // FORM SUBMISSION
     // ========================
     $("#bookingForm").submit(function (e) {
-
         e.preventDefault();
+        
+        const roomType = $("#roomType").val();
+        const grandTotal = $("#grandTotal").text();
 
-        let checkin = new Date($("#checkin").val());
-        let checkout = new Date($("#checkout").val());
-
-        if (checkout <= checkin) {
-            $("#errorMsg").text("Check-out must be after Check-in date!");
+        if (!$("#checkin").val() || !$("#checkout").val()) {
+            $("#errorMsg").text("Please select your travel dates.");
             return;
         }
 
-        $("#errorMsg").text("");
+        if (!roomType || grandTotal === "0") {
+            $("#errorMsg").text("Please select a room type and valid dates.");
+            return;
+        }
 
-        let details = `
-            Room Type: ${$("#roomType").val()} <br>
-            Guests: ${guestCount} <br>
-            Grand Total: ₹ ${$("#grandTotal").text()}
+        $("#errorMsg").text(""); // Clear errors
+
+        // Generate Summary
+        const details = `
+            <div class="text-start px-3">
+                <strong>Room:</strong> ${roomType} <br>
+                <strong>Stay:</strong> ${$("#checkin").val()} to ${$("#checkout").val()} <br>
+                <strong>Guests:</strong> ${adults} Adults, ${children} Children <br>
+                <hr>
+                <h5 class="text-center text-success">Total Paid: ₹ ${grandTotal}</h5>
+            </div>
         `;
 
         $("#bookingDetails").html(details);
 
-        let modal = new bootstrap.Modal(document.getElementById('bookingModal'));
+        const modal = new bootstrap.Modal(document.getElementById('bookingModal'));
         modal.show();
     });
-
 });
-let totalGuests = adults + children;
-
-let details = `
-    Room Type: ${$("#roomType").val()} <br>
-    Adults: ${adults} <br>
-    Children: ${children} <br>
-    Total Guests: ${totalGuests} <br>
-    Grand Total: ₹ ${$("#grandTotal").text()}
-`;

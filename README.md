@@ -1,28 +1,119 @@
-**Day 1 Report –  Hotel Booking System
-**
-Name: Apeksha Shere
-College: Saraswati College Shegaon
-Project:  Hotel Booking Form
-Technologies: HTML5, CSS3, Bootstrap 5, JavaScript, jQuery UI
+ Luxury Hotel Booking System
 
-** Work Completed**
+A responsive and interactive hotel booking form developed as part of internship training.
+This project demonstrates smart date validation, dynamic pricing, responsive UI design, and professional user interaction using HTML, CSS, Bootstrap, and JavaScript.
 
-Designed booking form layout using HTML & Bootstrap
+ Project Overview
 
-Applied light premium theme with gold accents
+The Luxury Hotel Booking System allows users to:
 
-Implemented Check-in & Check-out datepicker with validation
+Select Check-in and Check-out dates
 
-Added Room Type selection
+Choose Room Type (Single, Double, Suite)
 
-Created Adults & Children guest counter
+Select number of Adults and Children
 
-Implemented dynamic price calculation with 18% GST
+View automatic price calculation with GST
 
-Added basic form validation and error alerts
+Add special requests
 
-Optimized layout to fit in one screen (compact design)
+Submit booking with proper validation and confirmation modal
 
-** Outcome
-**
-A responsive and functional frontend hotel booking form was successfully developed with dynamic calculations and validations.
+The project focuses on frontend development, real-time form validation, dynamic calculations, and modern UI/UX improvements.
+
+ Features
+
+ Fully Responsive Design (Mobile, Tablet, Desktop)
+
+ Full-screen background image with overlay
+
+ Glassmorphism luxury booking card design
+
+ Premium gold theme styling
+
+ Smart Date Validation (Check-out must be after Check-in)
+
+ Restriction of past date selection
+
+Dynamic pricing with 18% GST calculation
+
+Real-time price update on room or guest change
+
+ Indian currency formatting (₹)
+
+ Professional receipt-style confirmation modal
+
+Technologies Used
+
+HTML5 – Structure of the booking form
+
+CSS3 – Styling, glassmorphism effect, responsiveness
+
+Bootstrap 5 – Layout and UI components
+
+JavaScript – Dynamic validation & price calculation
+
+jQuery & jQuery UI – Datepicker functionality
+
+Git & GitHub – Version control
+
+GitHub Pages / Netlify – Deployment
+
+ Project Structure
+luxury-hotel-booking/
+│
+├── index.html
+├── style.css
+├── script.js
+├── images/
+│   └── family.jpeg
+└── README.md
+ How to Run the Project
+
+Clone the repository:
+
+git clone <https://github.com/apekshashere15/hotel_booking>
+
+Open the project folder.
+
+Open index.html in your browser.
+
+No additional setup required.
+
+ Validation Logic
+
+Past dates are disabled.
+
+Check-out date cannot be earlier than or equal to Check-in date.
+
+Room type selection is mandatory.
+
+Error messages guide the user in case of invalid input.
+
+Dynamic feedback and confirmation modal appear after successful booking.
+
+ Deployment
+
+The project is deployed using:
+
+GitHub Pages / Netlify
+
+Live Demo Link: (Add your deployed link here)
+
+Learning Outcomes
+
+Implemented real-time form validation using JavaScript.
+
+Designed a responsive and modern UI using Bootstrap and CSS.
+
+Applied glassmorphism and luxury styling techniques.
+
+Implemented dynamic pricing logic with GST calculation.
+
+Practiced Git workflow and project deployment.
+
+ Author
+
+Apeksha Shere
+BCA Student – Saraswati College Shegaon
+Internship Training Project

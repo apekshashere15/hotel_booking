@@ -1,7 +1,6 @@
 **Day 1 Report 26/02/26 – Hotel Booking System ** 
 Name: Apeksha Shere College: Saraswati College Shegaon 
-Project: Hotel Booking Form Technologies: HTML5, CSS3, Bootstrap 5, JavaScript, jQuery UI
-
+Project: Hotel Booking Form 
 ** Work Completed**
 
 Designed booking form layout using HTML & Bootstrap
@@ -21,3 +20,30 @@ Added basic form validation and error alerts
 Optimized layout to fit in one screen (compact design)
 
 ** Outcome ** A responsive and functional frontend hotel booking form was successfully developed with dynamic calculations and validations.
+
+Day 02 Report Date - 04/03/2026 – Luxury Hotel Booking System
+
+Name: Apeksha Shere
+College: Saraswati College Shegaon
+Project: Hotel Booking Form
+
+
+Work Completed
+
+Fixed layout overlap issue by shifting image to CSS background and centering the form using overlay
+
+Applied glassmorphism (frosted glass) effect with gold luxury theme
+
+Improved responsiveness and visual appearance of the booking form
+
+Implemented smart date validation to prevent past date selection and invalid Check-out dates
+
+Enhanced dynamic pricing to update Room Total and 18% GST instantly on Room Type or Guest Count change
+
+Applied Indian currency formatting (₹)
+
+Designed receipt-style confirmation modal for professional user experience
+
+Outcome
+
+A responsive, visually enhanced, and fully functional hotel booking system was successfully improved with smart validations, dynamic pricing, and professional UI design.

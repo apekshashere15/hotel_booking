@@ -83,7 +83,8 @@ $(document).ready(function () {
         const timeDiff = checkout.getTime() - checkin.getTime();
         const nights = Math.ceil(timeDiff / (1000 * 3600 * 24));
 
-        const roomTotal = nights * prices[room];
+       const totalGuests = adults + children;
+const roomTotal = nights * prices[room] * totalGuests;
         const gst = roomTotal * 0.18;
         const grandTotal = roomTotal + gst;
 

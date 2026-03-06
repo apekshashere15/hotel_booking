@@ -116,4 +116,4 @@ Practiced Git workflow and project deployment.
 
 Apeksha Shere
 BCA Student – Saraswati College Shegaon
-Internship Training Project
+ Training Project

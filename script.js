@@ -13,6 +13,14 @@ $(document).ready(function () {
     let children = 0;
 
     // ========================
+    // ROOM AVAILABILITY
+    // ========================
+    const roomAvailability = {
+        "Single": 5,
+        "Double": 3,
+        "Suite": 2
+    };
+    // ========================
     // COUNTER LOGIC
     // ========================
     function updateCounters() {
@@ -79,12 +87,24 @@ $(document).ready(function () {
             return;
         }
 
+        function checkAvailability(roomType) {
+
+    if (roomAvailability[roomType] > 0) {
+        $("#errorMsg").text("");
+        return true;
+    } 
+    else {
+        $("#errorMsg").text("Sorry! This room type is currently not available.");
+        return false;
+    }
+
+}
         // Calculate nights
         const timeDiff = checkout.getTime() - checkin.getTime();
         const nights = Math.ceil(timeDiff / (1000 * 3600 * 24));
 
-       const totalGuests = adults + children;
-const roomTotal = nights * prices[room] * totalGuests;
+        const totalGuests = adults + children;
+        const roomTotal = nights * prices[room] * totalGuests;
         const gst = roomTotal * 0.18;
         const grandTotal = roomTotal + gst;
 
@@ -106,8 +126,11 @@ const roomTotal = nights * prices[room] * totalGuests;
     // ========================
     $("#bookingForm").submit(function (e) {
         e.preventDefault();
-        
+
         const roomType = $("#roomType").val();
+        if (!checkAvailability(roomType)) {
+    return;
+}
         const grandTotal = $("#grandTotal").text();
 
         if (!$("#checkin").val() || !$("#checkout").val()) {
@@ -134,7 +157,7 @@ const roomTotal = nights * prices[room] * totalGuests;
         `;
 
         $("#bookingDetails").html(details);
-
+roomAvailability[roomType]--;
         const modal = new bootstrap.Modal(document.getElementById('bookingModal'));
         modal.show();
     });

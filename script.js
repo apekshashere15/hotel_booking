@@ -20,6 +20,13 @@ $(document).ready(function () {
         "Double": 3,
         "Suite": 2
     };
+
+    // Track booked dates for each room type
+    const bookedDates = {
+        "Single": [],
+        "Double": [],
+        "Suite": []
+    };
     // ========================
     // COUNTER LOGIC
     // ========================
@@ -67,6 +74,35 @@ $(document).ready(function () {
     });
 
     // ========================
+    // AVAILABILITY CHECK
+    // ========================
+    function checkAvailability(roomType, checkinDate, checkoutDate) {
+        const checkin = new Date(checkinDate);
+        const checkout = new Date(checkoutDate);
+
+        // Check if room is completely out of stock
+        if (roomAvailability[roomType] <= 0) {
+            $("#errorMsg").text("Sorry! This room type is completely booked.");
+            return false;
+        }
+
+        // Check if selected dates overlap with any booked dates
+        for (let bookedRange of bookedDates[roomType]) {
+            const bookedStart = new Date(bookedRange.start);
+            const bookedEnd = new Date(bookedRange.end);
+
+            // Check if there's any overlap between selected dates and booked dates
+            if (checkin < bookedEnd && checkout > bookedStart) {
+                $("#errorMsg").text(`Sorry! This room is not available from ${bookedRange.start} to ${bookedRange.end}. Please select different dates.`);
+                return false;
+            }
+        }
+
+        $("#errorMsg").text("");
+        return true;
+    }
+
+    // ========================
     // PRICE CALCULATION
     // ========================
     function calculatePrice() {
@@ -86,19 +122,6 @@ $(document).ready(function () {
             resetPrices();
             return;
         }
-
-        function checkAvailability(roomType) {
-
-    if (roomAvailability[roomType] > 0) {
-        $("#errorMsg").text("");
-        return true;
-    } 
-    else {
-        $("#errorMsg").text("Sorry! This room type is currently not available.");
-        return false;
-    }
-
-}
         // Calculate nights
         const timeDiff = checkout.getTime() - checkin.getTime();
         const nights = Math.ceil(timeDiff / (1000 * 3600 * 24));
@@ -128,15 +151,19 @@ $(document).ready(function () {
         e.preventDefault();
 
         const roomType = $("#roomType").val();
-        if (!checkAvailability(roomType)) {
-    return;
-}
-        const grandTotal = $("#grandTotal").text();
+        const checkinDate = $("#checkin").val();
+        const checkoutDate = $("#checkout").val();
 
-        if (!$("#checkin").val() || !$("#checkout").val()) {
+        if (!checkinDate || !checkoutDate) {
             $("#errorMsg").text("Please select your travel dates.");
             return;
         }
+
+        if (!checkAvailability(roomType, checkinDate, checkoutDate)) {
+            return;
+        }
+
+        const grandTotal = $("#grandTotal").text();
 
         if (!roomType || grandTotal === "0") {
             $("#errorMsg").text("Please select a room type and valid dates.");
@@ -149,7 +176,7 @@ $(document).ready(function () {
         const details = `
             <div class="text-start px-3">
                 <strong>Room:</strong> ${roomType} <br>
-                <strong>Stay:</strong> ${$("#checkin").val()} to ${$("#checkout").val()} <br>
+                <strong>Stay:</strong> ${checkinDate} to ${checkoutDate} <br>
                 <strong>Guests:</strong> ${adults} Adults, ${children} Children <br>
                 <hr>
                 <h5 class="text-center text-success">Total Paid: ₹ ${grandTotal}</h5>
@@ -157,8 +184,25 @@ $(document).ready(function () {
         `;
 
         $("#bookingDetails").html(details);
-roomAvailability[roomType]--;
+
+        // Add booked dates to the array
+        bookedDates[roomType].push({
+            start: checkinDate,
+            end: checkoutDate
+        });
+
+        roomAvailability[roomType]--;
         const modal = new bootstrap.Modal(document.getElementById('bookingModal'));
         modal.show();
+
+        // Clear form fields after booking confirmation
+        $("#bookingForm")[0].reset();
+        $("#checkin").val("");
+        $("#checkout").val("");
+        $("#roomType").val("");
+        resetPrices();
+        adults = 1;
+        children = 0;
+        updateCounters();
     });
 });

@@ -47,3 +47,34 @@ Designed receipt-style confirmation modal for professional user experience
 Outcome
 
 A responsive, visually enhanced, and fully functional hotel booking system was successfully improved with smart validations, dynamic pricing, and professional UI design.
+
+Day 03 Report
+Date: 06/03/2026 – Luxury Hotel Booking System
+
+ Name: Apeksha Shere
+ College: Saraswati College Shegaon
+ Project: Hotel Booking Form
+In time: 12:40 pm
+ Out time: 3:00 pm
+
+Work Completed
+1. Added room availability checking with stock limits
+2. Implemented date‑overlap validation to block already‑reserved ranges
+3. Integrated payment method selection (Cash, UPI, Card) with validation
+4. Generated unique booking IDs automatically for each confirmed reservation
+5. Enhanced the confirmation modal to show:
+* Booking ID
+* Room type & stay dates
+* Guest count
+* Payment method
+* Total amount
+6. Added a Download Receipt button that produces a PDF via jsPDF
+7. Fixed and centered the loading animation during booking processing
+8. Reset the form automatically after successful bookings
+9. Strengthened form validation for dates, room choice, and payment
+10. Improved overall UX to make the system more realistic and user‑friendly
+ Outcome
+The hotel booking application now supports stock control, date conflict detection, payment options, unique IDs, PDF receipts, and a polished interface—resulting in a much more complete & professional prototype.
+
+🔗 GitHub Link:
+https://github.com/apekshashere15/hotel_booking

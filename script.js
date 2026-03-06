@@ -143,6 +143,18 @@ $(document).ready(function () {
     }
 
     $("#roomType").change(calculatePrice);
+// ========================
+// BOOKING ID GENERATOR
+// ========================
+
+function generateBookingID(){
+
+    let random = Math.floor(1000 + Math.random() * 9000);
+
+    let year = new Date().getFullYear();
+
+    return "GH-" + year + "-" + random;
+}
 
     // ========================
     // FORM SUBMISSION
@@ -178,9 +190,13 @@ $(document).ready(function () {
 
         $("#errorMsg").text(""); // Clear errors
 
+        // Generate Booking ID
+        const bookingID = generateBookingID();
+
         // Generate Summary
         const details = `
             <div class="text-start px-3">
+                <h6 class="text-success">Booking ID: ${bookingID}</h6>
                 <strong>Room:</strong> ${roomType} <br>
                 <strong>Stay:</strong> ${checkinDate} to ${checkoutDate} <br>
                 <strong>Guests:</strong> ${adults} Adults, ${children} Children <br>
@@ -199,8 +215,18 @@ $(document).ready(function () {
         });
 
         roomAvailability[roomType]--;
-        const modal = new bootstrap.Modal(document.getElementById('bookingModal'));
-        modal.show();
+        // Show loader
+        $("#bookingLoader").addClass('active');
+
+        // Simulate booking process (2 seconds)
+        setTimeout(function(){
+
+            $("#bookingLoader").removeClass('active');
+
+            const modal = new bootstrap.Modal(document.getElementById('bookingModal'));
+            modal.show();
+
+        }, 2000);
 
         // Clear form fields after booking confirmation
         $("#bookingForm")[0].reset();
@@ -211,5 +237,20 @@ $(document).ready(function () {
         adults = 1;
         children = 0;
         updateCounters();
+    });
+
+    // ========================
+    // DOWNLOAD BOOKING RECEIPT
+    // ========================
+    $("#downloadReceipt").click(function(){
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+
+        const content = $("#bookingDetails").text();
+
+        doc.text("Luxury Hotel Booking Receipt", 20, 20);
+        doc.text(content, 20, 40);
+
+        doc.save("Hotel_Booking_Receipt.pdf");
     });
 });

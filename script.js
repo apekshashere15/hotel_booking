@@ -164,9 +164,15 @@ $(document).ready(function () {
         }
 
         const grandTotal = $("#grandTotal").text();
+        const payment = $("#paymentMethod").val();
 
         if (!roomType || grandTotal === "0") {
             $("#errorMsg").text("Please select a room type and valid dates.");
+            return;
+        }
+
+        if (!payment) {
+            $("#errorMsg").text("Please select a payment method.");
             return;
         }
 
@@ -178,6 +184,7 @@ $(document).ready(function () {
                 <strong>Room:</strong> ${roomType} <br>
                 <strong>Stay:</strong> ${checkinDate} to ${checkoutDate} <br>
                 <strong>Guests:</strong> ${adults} Adults, ${children} Children <br>
+                <strong>Payment:</strong> ${payment} <br>
                 <hr>
                 <h5 class="text-center text-success">Total Paid: ₹ ${grandTotal}</h5>
             </div>
